@@ -1,53 +1,56 @@
 #**Finding Lane Lines on the Road** 
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-<img src="examples/laneLines_thirdPass.jpg" width="480" alt="Combined Image" />
+**README.md is the same as the writeup. I just copied my writeup here.**
 
-Overview
+# **Finding Lane Lines on the Road** 
+
+## Mohammed Amarnah
+
+### A Writeup written for Udacity's Self Driving Car Nanodegree first project: Finding Lane Lines from a video stream.
+
 ---
 
-When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
+**Finding Lane Lines on the Road**
 
-In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
-
-To complete the project, two files will be submitted: a file containing project code and a file containing a brief write up explaining your solution. We have included template files to be used both for the [code](https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb) and the [writeup](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).The code file is called P1.ipynb and the writeup template is writeup_template.md 
-
-To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
+The goals / steps of this project are the following:
+* Make a pipeline that finds lane lines on the road from a video stream
+* Reflect on my work in a written report
 
 
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
-
-1. Describe the pipeline
-
-2. Identify any shortcomings
-
-3. Suggest possible improvements
-
-We encourage using images in your writeup to demonstrate how your pipeline works.  
-
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md). 
+[//]: # (Image References)
 
 
-The Project
+[image1]: ./test_images_output/old_outputs/solidWhiteCurve.png
+[image2]: ./test_images_output/solidYellowCurve.jpg
+[image3]: ./test_videos_output/all-results/curvedError.png
+
 ---
 
-## If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
+### Reflection
 
-**Step 1:** Set up the [CarND Term1 Starter Kit](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/83ec35ee-1e02-48a5-bdb7-d244bd47c2dc/lessons/8c82408b-a217-4d09-b81d-1bda4c6380ef/concepts/4f1870e0-3849-43e4-b670-12e6f2d4b7a7) if you haven't already.
+### 1. How I started and how draw_lines() were edited
 
-**Step 2:** Open the code in a Jupyter Notebook
+My first step in this project was to redo all the quizzes in one function, just like we took them during the videos. Obviously color selection didn't work so well, so I just tried doing the Canny edge detection technique with the same parameters that we took them in the class. And I have to say, I got pretty good results for a first run. Here's how it looked like:
 
-You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
+![alt text][image1]
 
-Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
+To fix that, I did as suggested in the comment written in the draw_lines() function. I found the average slope of all hough lines of the hough transformation of the image. I found the average slope on the right lines and the left lines separately. I separated the lines based on their slope (if it was below 0 or above 0). Here is a sample output image: 
 
-`> jupyter notebook`
+![alt text][image2]
 
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
+### 2. Potential Shortcomings of the pipeline
 
-**Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
 
+The most potential shortcoming would be that it doesn't work on the challenge video. Meaning, it won't work on curved lane lines.
+
+![alt text][image3]
+
+Another shortcoming that I thought about is it working on shadows, night, and different lightning conditions. (but I haven't tested it yet so I'm not sure).
+
+
+### 3. Possible improvements to the pipeline
+
+A possible improvement for the curved lane lines problem would be to fit some good polynomial function. That thing I'll work on in the next few days, but I didn't have time to work on before the deadline.
+
+For the problems that occur due to the lightning conditions, I have no particular idea on how to solve it, but it'd be some parameters tuning in the canny function I guess.
